@@ -45,10 +45,13 @@ public class Service {
     }
 
     public void getPostById(Post post){
-        String query = "SELECT p.id , p.title , p.content ,p.create_at, a.name, t.name  FROM post p \n" +
+        String query = "SELECT p.id , p.title , p.content ,p.create_at, a.name,\n" +
+                "\t(SELECT JSON_ARRAYAGG(t.name) FROM tag t \n" +
+                "\t\tINNER JOIN post_tag pt ON t.id =pt.id_tag  \n" +
+                "\t\tINNER JOIN post p  ON pt.id_post =p.id  WHERE p.id = "+post.getId()+") AS tag_name\n" +
+                "\tFROM post p \n" +
                 "\tINNER JOIN author a ON a.id  = p.id_author \n" +
-                "\tINNER JOIN post_tag pt ON p.id = pt.id_post \n" +
-                "\tINNER JOIN tag t ON t.id = pt.id_tag WHERE p.id =  " + post.getId();
+                "\tWHERE p.id = " + post.getId();
         ArrayList<Post> posts = new ArrayList<>();
 
         try {
@@ -57,7 +60,7 @@ public class Service {
             while (resultSet.next()){
                 System.out.println(resultSet.getString("p.id")+" - " + resultSet.getString("p.title")
                         +" - " + resultSet.getString("p.content")+" - " + resultSet.getString("a.name")
-                        +" - " + resultSet.getString("t.name")+" - " + resultSet.getString("p.create_at"));
+                        +" - " + resultSet.getString("tag_name")+" - " + resultSet.getString("p.create_at"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

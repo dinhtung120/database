@@ -60,7 +60,7 @@ public class Controller {
     public static void menu() {
         System.out.println("---------------------------------------");
         System.out.println("Chọn 1: Xem thông tin các bai viết pulic");
-        System.out.println("Chọn 2: Xem thông tin bài viết theo id = 1");
+        System.out.println("Chọn 2: Xem thông tin bài viết theo id ");
         System.out.println("Chọn 3: Thêm bài viết mới");
         System.out.println("Chọn 0: Để đăng xuất");
         System.out.println("Lựa chọn của bạn là: ");
@@ -83,7 +83,7 @@ public class Controller {
     public static Post searchById(ArrayList<Post> posts) {
         Post p = null;
         System.out.println("Nhập ID bài viết muốn xem");
-        int searchId = 1;
+        int searchId = Integer.parseInt(scanner.nextLine());
         for (Post post : posts) {
             if (post.getId() == searchId) {
                 p = post;
