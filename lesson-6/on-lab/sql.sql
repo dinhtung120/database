@@ -55,9 +55,6 @@ where p.id = 1
 
 
 
-
-
-
 SELECT p.thumnail, p.title ,p.description ,p.create_at FROM post p
 		INNER JOIN category c ON c.id = p.id_category
 		WHERE c.name = 'Blog' AND p.status = 'public'
